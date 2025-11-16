@@ -36,6 +36,20 @@ object YamlConfigManager {
 }
 
 @Serializable
+data class AppConfig(
+    val application: Application,
+    val db: DatabaseConfig,
+    val ignore: Ignore,
+    @SerialName("suffix-bean-param")
+    val suffixBeanParam: String,
+    @SerialName("date-format")
+    val dateFormatConfig: DateFormatConfig,
+    val path: PathConfig,
+    @SerialName("package-config")
+    val packageConfig: PackageConfig
+)
+
+@Serializable
 data class Application(
     val name: String
 )
@@ -47,6 +61,12 @@ data class DatabaseConfig(
     val password: String,
     @SerialName("driver-class-name")
     val driverClassName: String
+)
+
+@Serializable
+data class Ignore(
+    @SerialName("table-prefix")
+    val ignoreTablePrefix: Boolean
 )
 
 @Serializable
@@ -63,14 +83,8 @@ data class PackageConfig(
 )
 
 @Serializable
-data class AppConfig(
-    val application: Application,
-    val db: DatabaseConfig,
-    @SerialName("ignore-table-prefix")
-    val ignoreTablePrefix: Boolean,
-    @SerialName("suffix-bean-param")
-    val suffixBeanParam: String,
-    val path: PathConfig,
-    @SerialName("package-config")
-    val packageConfig: PackageConfig
+data class DateFormatConfig(
+    val expression: String,
+    @SerialName("import-class")
+    val importClass: String
 )

@@ -7,8 +7,16 @@ db:
   password: emmmm000
   driver-class-name: com.mysql.cj.jdbc.Driver
 
-ignore-table-prefix: true
+ignore:
+  # 忽略表前缀
+  table-prefix: true
+
+# 生成 bean查询参数 的前缀
 suffix-bean-param: Param
+# 日期相关
+date-format:
+  expression: "@DateTimeFormat"
+  import-class: "org.springframework.format.annotation.DateTimeFormat"
 
 path:
   output-dir: D:/code/kotlin/CodeGen/TestCodeGen/src/main
