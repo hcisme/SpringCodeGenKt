@@ -1,0 +1,18 @@
+application:
+  name: SpringCodeGenKt
+
+db:
+  url: jdbc:mysql://127.0.0.1:3306/codegen?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&allowMultiQueries=true
+  username: root
+  password: emmmm000
+  driver-class-name: com.mysql.cj.jdbc.Driver
+
+ignore-table-prefix: true
+suffix-bean-param: Param
+
+path:
+  output-dir: D:/code/kotlin/CodeGen/TestCodeGen/src/main
+package-config:
+  base: io.github.hcisme.testcodegen
+  pojo: entity.pojo
+  param: entity.param
