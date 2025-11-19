@@ -78,13 +78,17 @@ object Constant {
 
     // ============================================================完整的路径
     val FULL_PACKAGE_BASE_PATH: String = "$OUTPUT_DIR/$SOURCE_DIR_KOTLIN/${BASE_PACKAGE.replace('.', '/')}"
+    val FULL_XML_PACKAGE_BASE_PATH: String = "$OUTPUT_DIR/$SOURCE_DIR_RESOURCES/${BASE_PACKAGE.replace('.', '/')}"
+
     val FULL_POJO_PATH: String = "$FULL_PACKAGE_BASE_PATH/${POJO_PACKAGE.replace('.', '/')}"
     val FULL_QUERY_PATH: String = "$FULL_PACKAGE_BASE_PATH/${QUERY_PACKAGE.replace('.', '/')}"
     val FULL_ENUMS_PATH: String = "$FULL_PACKAGE_BASE_PATH/${ENUMS_PACKAGE.replace('.', '/')}"
     val FULL_UTILS_PATH: String = "$FULL_PACKAGE_BASE_PATH/${UTILS_PACKAGE.replace('.', '/')}"
     val FULL_MAPPERS_PATH: String = "$FULL_PACKAGE_BASE_PATH/${MAPPERS_PACKAGE.replace('.', '/')}"
+
+    val FULL_XML_MAPPERS_PATH: String = "$FULL_XML_PACKAGE_BASE_PATH/${MAPPERS_PACKAGE.replace('.', '/')}"
 }
 
 fun main() {
-    println(Constant.FULL_ENUMS_PATH)
+    println(Constant.FULL_XML_MAPPERS_PATH)
 }

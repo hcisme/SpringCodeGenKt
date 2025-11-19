@@ -10,6 +10,7 @@ object SpringCodeGenApplication {
             BuildPojo.execute(tableInfo)
             BuildQuery.execute(tableInfo)
             BuildMapper.execute(tableInfo)
+            BuildMapperXml.execute(tableInfo)
         }
     }
 }

@@ -12,14 +12,14 @@ object BuildMapper {
     private val logger = LoggerFactory.getLogger(BuildMapper::class.java)
 
     fun execute(tableInfo: TableInfo) {
-        val pojoDir = File(Constant.FULL_MAPPERS_PATH).apply {
+        val mappersDir = File(Constant.FULL_MAPPERS_PATH).apply {
             takeIf { !it.exists() }?.mkdirs()
         }
 
         val className = tableInfo.beanName + Constant.SUFFIX_MAPPER
-        val pojoFile = File(pojoDir, "${className}.kt")
+        val mapperFile = File(mappersDir, "${className}.kt")
 
-        pojoFile.bufferedWriter(Charsets.UTF_8).use { bw ->
+        mapperFile.bufferedWriter(Charsets.UTF_8).use { bw ->
             runCatching {
                 // 写入包声明和导入
                 bw.writePackageAndImports()
