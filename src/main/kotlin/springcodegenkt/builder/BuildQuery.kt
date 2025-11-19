@@ -9,17 +9,17 @@ import org.slf4j.LoggerFactory
 import java.io.BufferedWriter
 import java.io.File
 
-object BuildPojo {
+object BuildQuery {
     private val logger = LoggerFactory.getLogger(BuildPojo::class.java)
 
     fun execute(tableInfo: TableInfo) {
-        val pojoDir = File(Constant.FULL_POJO_PATH).apply {
+        val paramDir = File(Constant.FULL_QUERY_PATH).apply {
             takeIf { !it.exists() }?.mkdirs()
         }
 
-        val pojoFile = File(pojoDir, "${tableInfo.beanName}.kt")
+        val paramFile = File(paramDir, "${tableInfo.beanQueryName}.kt")
 
-        pojoFile.bufferedWriter(Charsets.UTF_8).use { bw ->
+        paramFile.bufferedWriter(Charsets.UTF_8).use { bw ->
             runCatching {
                 // 写入包声明和导入
                 bw.writePackageAndImports(tableInfo)
@@ -39,10 +39,10 @@ object BuildPojo {
     }
 
     private fun BufferedWriter.writePackageAndImports(tableInfo: TableInfo) {
-        writeLine("package ${Constant.FULL_POJO_PACKAGE}")
+        writeLine("package ${Constant.FULL_PARAM_PACKAGE}")
         newLine()
 
-        val imports = mutableSetOf("java.io.Serializable").apply {
+        val imports = mutableSetOf<String>().apply {
             if (tableInfo.haveDate || tableInfo.haveDateTime) add(Constant.DATE_FORMAT_CLASS)
             if (tableInfo.haveDate) add("java.time.LocalDate")
             if (tableInfo.haveDateTime) add("java.time.LocalDateTime")
@@ -57,11 +57,11 @@ object BuildPojo {
 
     private fun BufferedWriter.writeClassHeader(tableInfo: TableInfo) {
         tableInfo.comment?.let {
-            createClassComment(it)
+            createClassComment("$it 查询对象")
             newLine()
         }
 
-        writeLine("class ${tableInfo.beanName} : Serializable {")
+        writeLine("class ${tableInfo.beanQueryName} {")
     }
 
     private fun BufferedWriter.writeFields(fieldList: List<FieldInfo>) {
@@ -76,12 +76,24 @@ object BuildPojo {
             createFieldComment(comment)
             newLine()
         }
-
-        getDateTimeFormatAnnotation(field)?.let { annotation ->
-            writeLine("\t$annotation")
-        }
+        val annotationText = getDateTimeFormatAnnotation(field)
+        annotationText?.let { writeLine("\t$it") }
 
         writeLine("\tvar ${field.propertyName}: ${field.ktType} = null")
+
+        // String类型参数
+        if (field.ktType.contains("String")) {
+            newLine()
+            writeLine("\tvar ${field.propertyName}${Constant.SUFFIX_BEAN_QUERY_FUZZY}: ${field.ktType} = null")
+        }
+
+        // 时间类型的参数
+        annotationText?.let {
+            newLine()
+            writeLine("\tvar ${field.propertyName}${Constant.SUFFIX_BEAN_QUERY_TIME_START}: String? = null")
+            newLine()
+            writeLine("\tvar ${field.propertyName}${Constant.SUFFIX_BEAN_QUERY_TIME_END}: String? = null")
+        }
     }
 
     private fun BufferedWriter.writeToStringMethod(fieldList: List<FieldInfo>) {

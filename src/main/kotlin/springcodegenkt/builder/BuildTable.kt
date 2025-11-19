@@ -5,6 +5,7 @@ import io.github.hcisme.springcodegenkt.bean.FieldInfo
 import io.github.hcisme.springcodegenkt.bean.TableInfo
 import io.github.hcisme.springcodegenkt.utils.Tools
 import io.github.hcisme.springcodegenkt.utils.YamlConfigManager
+import io.github.hcisme.springcodegenkt.utils.iterate
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.sql.Connection
@@ -46,7 +47,7 @@ object BuildTable {
                     val tableInfo = TableInfo(
                         tableName = tableName,
                         beanName = beanName,
-                        beanParamName = beanName + Constant.SUFFIX_BEAN_PARAM,
+                        beanQueryName = beanName + Constant.SUFFIX_BEAN_QUERY,
                         comment = comment
                     )
                     readFieldInfo(tableInfo)
@@ -92,8 +93,9 @@ object BuildTable {
                 }
             }
             tableInfo.fieldList = fieldInfoList
-        }.onFailure { exception ->
-            logger.error("读取表 ${tableInfo.tableName} 的字段信息失败", exception)
+        }.onFailure { e ->
+            logger.error("读取表 ${tableInfo.tableName} 的字段信息失败", e.message)
+            throw e
         }
     }
 
@@ -119,8 +121,9 @@ object BuildTable {
                     tableInfo.keyIndexMap.putAll(tempIndexMap)
                 }
             }
-        }.onFailure { exception ->
-            logger.error("读取表 ${tableInfo.tableName} 的索引信息失败", exception)
+        }.onFailure { e ->
+            logger.error("读取表 ${tableInfo.tableName} 的索引信息失败", e.message)
+            throw e
         }
     }
 
@@ -133,11 +136,5 @@ object BuildTable {
                 }
             }
             .joinToString("")
-    }
-}
-
-private inline fun ResultSet.iterate(block: ResultSet.() -> Unit) {
-    while (next()) {
-        block()
     }
 }

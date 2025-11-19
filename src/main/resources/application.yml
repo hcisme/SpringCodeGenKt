@@ -11,11 +11,19 @@ ignore:
   # 忽略表前缀
   table-prefix: true
 
-# 生成 bean查询参数 的前缀
-suffix-bean-param: Param
+# 生成 bean查询参数文件 的后缀
+suffix-bean-param: Query
+# 模糊查询字符串 的后缀
+suffix-bean-param-fuzzy: Fuzzy
+# 模糊查询时间 开始 的后缀
+suffix-bean-param-time-start: Start
+# 模糊查询时间 结束 的后缀
+suffix-bean-param-time-end: End
+# mapper 的后缀
+suffix-mapper: Mapper
 # 日期相关
 date-format:
-  expression: "@DateTimeFormat"
+  expression: "DateTimeFormat"
   import-class: "org.springframework.format.annotation.DateTimeFormat"
 
 path:
@@ -23,4 +31,7 @@ path:
 package-config:
   base: io.github.hcisme.testcodegen
   pojo: entity.pojo
-  param: entity.param
+  query: entity.query
+  enums: entity.enums
+  mappers: mappers
+  utils: utils

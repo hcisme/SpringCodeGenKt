@@ -42,6 +42,14 @@ data class AppConfig(
     val ignore: Ignore,
     @SerialName("suffix-bean-param")
     val suffixBeanParam: String,
+    @SerialName("suffix-bean-param-fuzzy")
+    val suffixBeanParamFuzzy: String,
+    @SerialName("suffix-bean-param-time-start")
+    val suffixBeanParamTimeStart: String,
+    @SerialName("suffix-bean-param-time-end")
+    val suffixBeanParamTimeEnd: String,
+    @SerialName("suffix-mapper")
+    val suffixMapper: String,
     @SerialName("date-format")
     val dateFormatConfig: DateFormatConfig,
     val path: PathConfig,
@@ -79,7 +87,10 @@ data class PathConfig(
 data class PackageConfig(
     val base: String,
     val pojo: String,
-    val param: String
+    val query: String,
+    val enums: String,
+    val mappers: String,
+    val utils: String
 )
 
 @Serializable

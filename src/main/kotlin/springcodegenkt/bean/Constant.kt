@@ -3,32 +3,88 @@ package io.github.hcisme.springcodegenkt.bean
 import io.github.hcisme.springcodegenkt.utils.YamlConfigManager
 
 object Constant {
-    private const val PATH_KOTLIN = "kotlin"
-    private const val PATH_RESOURCES = "resources"
+    private const val SOURCE_DIR_KOTLIN = "kotlin"
+    private const val SOURCE_DIR_RESOURCES = "resources"
     val IGNORE_TABLE_PREFIX: Boolean = YamlConfigManager.config.ignore.ignoreTablePrefix
-    val SUFFIX_BEAN_PARAM: String = YamlConfigManager.config.suffixBeanParam
+    val SUFFIX_BEAN_QUERY: String = YamlConfigManager.config.suffixBeanParam
+    val SUFFIX_BEAN_QUERY_FUZZY: String = YamlConfigManager.config.suffixBeanParamFuzzy
+    val SUFFIX_BEAN_QUERY_TIME_START: String = YamlConfigManager.config.suffixBeanParamTimeStart
+    val SUFFIX_BEAN_QUERY_TIME_END: String = YamlConfigManager.config.suffixBeanParamTimeEnd
+    val SUFFIX_MAPPER: String = YamlConfigManager.config.suffixMapper
     val DATE_FORMAT_EXPRESSION: String = YamlConfigManager.config.dateFormatConfig.expression
     val DATE_FORMAT_CLASS: String = YamlConfigManager.config.dateFormatConfig.importClass
 
-    // D:/code/kotlin/CodeGen/TestCodeGen/src/main
-    val outputDir = YamlConfigManager.config.path.outputDir
+    /**
+     * D:/code/kotlin/CodeGen/TestCodeGen/src/main
+     */
+    val OUTPUT_DIR = YamlConfigManager.config.path.outputDir
 
-    // io.github.hcisme.testcodegen
-    val PACKAGE_BASE: String = YamlConfigManager.config.packageConfig.base
+    /**
+     * io.github.hcisme.testcodegen
+     */
+    val BASE_PACKAGE: String = YamlConfigManager.config.packageConfig.base
 
-    // entity.pojo
-    val PACKAGE_POJO: String = YamlConfigManager.config.packageConfig.pojo
+    // ============================================================包名
+    /**
+     * entity.pojo
+     */
+    val POJO_PACKAGE: String = YamlConfigManager.config.packageConfig.pojo
 
-    // entity.param
-    val PACKAGE_PARAM: String = YamlConfigManager.config.packageConfig.param
+    /**
+     * entity.query
+     */
+    val QUERY_PACKAGE: String = YamlConfigManager.config.packageConfig.query
 
-    // io.github.hcisme.testcodegen.entity.pojo
-    val FULL_POJO_PACKAGE_NAME: String = "$PACKAGE_BASE.$PACKAGE_POJO"
+    /**
+     * entity.enums
+     */
+    val ENUMS_PACKAGE: String = YamlConfigManager.config.packageConfig.enums
 
-    // io.github.hcisme.testcodegen.entity.param
-    val FULL_PARAM_PACKAGE_NAME: String = "$PACKAGE_BASE.$PACKAGE_PARAM"
+    /**
+     * mappers
+     */
+    val MAPPERS_PACKAGE: String = YamlConfigManager.config.packageConfig.mappers
 
-    val PATH_BASE: String = outputDir + "/" + PATH_KOTLIN + "/" + PACKAGE_BASE.replace(oldChar = '.', newChar = '/')
-    val PATH_POJO: String = PATH_BASE + "/" + PACKAGE_POJO.replace(oldChar = '.', newChar = '/')
-    val PATH_PARAM: String = PATH_BASE + "/" + PACKAGE_PARAM.replace(oldChar = '.', newChar = '/')
+    /**
+     * utils
+     */
+    val UTILS_PACKAGE: String = YamlConfigManager.config.packageConfig.utils
+
+    // ============================================================完整包名
+    /**
+     * io.github.hcisme.testcodegen + entity.pojo
+     */
+    val FULL_POJO_PACKAGE: String = "$BASE_PACKAGE.$POJO_PACKAGE"
+
+    /**
+     * io.github.hcisme.testcodegen + entity.query
+     */
+    val FULL_PARAM_PACKAGE: String = "$BASE_PACKAGE.$QUERY_PACKAGE"
+
+    /**
+     * io.github.hcisme.testcodegen + entity.enums
+     */
+    val FULL_ENUMS_PACKAGE: String = "$BASE_PACKAGE.$ENUMS_PACKAGE"
+
+    /**
+     * io.github.hcisme.testcodegen + utils
+     */
+    val FULL_UTILS_PACKAGE: String = "$BASE_PACKAGE.$UTILS_PACKAGE"
+
+    /**
+     * io.github.hcisme.testcodegen + mappers
+     */
+    val FULL_MAPPERS_PACKAGE: String = "$BASE_PACKAGE.$MAPPERS_PACKAGE"
+
+    // ============================================================完整的路径
+    val FULL_PACKAGE_BASE_PATH: String = "$OUTPUT_DIR/$SOURCE_DIR_KOTLIN/${BASE_PACKAGE.replace('.', '/')}"
+    val FULL_POJO_PATH: String = "$FULL_PACKAGE_BASE_PATH/${POJO_PACKAGE.replace('.', '/')}"
+    val FULL_QUERY_PATH: String = "$FULL_PACKAGE_BASE_PATH/${QUERY_PACKAGE.replace('.', '/')}"
+    val FULL_ENUMS_PATH: String = "$FULL_PACKAGE_BASE_PATH/${ENUMS_PACKAGE.replace('.', '/')}"
+    val FULL_UTILS_PATH: String = "$FULL_PACKAGE_BASE_PATH/${UTILS_PACKAGE.replace('.', '/')}"
+    val FULL_MAPPERS_PATH: String = "$FULL_PACKAGE_BASE_PATH/${MAPPERS_PACKAGE.replace('.', '/')}"
+}
+
+fun main() {
+    println(Constant.FULL_ENUMS_PATH)
 }

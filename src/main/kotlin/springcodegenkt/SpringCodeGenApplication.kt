@@ -1,12 +1,15 @@
 package io.github.hcisme.springcodegenkt
 
-import io.github.hcisme.springcodegenkt.builder.BuildPojo
-import io.github.hcisme.springcodegenkt.builder.BuildTable
+import io.github.hcisme.springcodegenkt.builder.*
 
 object SpringCodeGenApplication {
     fun init() {
+        BuildBase.execute()
+
         BuildTable.getTables().forEach { tableInfo ->
             BuildPojo.execute(tableInfo)
+            BuildQuery.execute(tableInfo)
+            BuildMapper.execute(tableInfo)
         }
     }
 }

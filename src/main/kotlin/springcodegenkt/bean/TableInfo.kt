@@ -17,7 +17,7 @@ data class TableInfo(
     /**
      * 参数名称
      */
-    var beanParamName: String,
+    var beanQueryName: String,
 
     /**
      * 表注释
