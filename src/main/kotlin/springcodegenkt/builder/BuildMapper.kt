@@ -65,7 +65,7 @@ object BuildMapper {
             val comment = methodName.split("And").joinToString(separator = " 和 ")
             val argumentString = fieldInfoList.joinToString(", ") { fieldInfo ->
                 "@Param(\"${fieldInfo.propertyName}\") ${fieldInfo.propertyName}: ${
-                    fieldInfo.ktType.replace(oldValue = "?", newValue = "")
+                    fieldInfo.ktType.removeSuffix("?")
                 }"
             }
 

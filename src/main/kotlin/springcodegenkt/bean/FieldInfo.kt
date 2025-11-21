@@ -32,5 +32,5 @@ data class FieldInfo(
     /**
      * 字段是否是自增长
      */
-    var isAutoIncrement: Boolean = false
+    var autoIncrement: Boolean = false
 )

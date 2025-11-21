@@ -10,7 +10,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.ResultSet
 
 object BuildTable {
     private val logger: Logger = LoggerFactory.getLogger(BuildTable::class.java)
@@ -77,7 +76,7 @@ object BuildTable {
                                 sqlType = sqlType,
                                 ktType = Tools.sqlTypeToKotlinType(sqlType = sqlType),
                                 comment = getString("comment"),
-                                isAutoIncrement = extra.equals(other = "auto_increment", ignoreCase = true),
+                                autoIncrement = extra.equals(other = "auto_increment", ignoreCase = true),
                             )
                         )
                         if (!tableInfo.haveDate) {

@@ -65,4 +65,31 @@ object Tools {
         val upperType = sqlType.uppercase()
         return upperType == "DECIMAL" || upperType == "NUMERIC"
     }
+
+    /**
+     * 将 Kotlin 基本数据类型字符串转换为对应的 Java 类型字符串
+     *
+     * @param kotlinType Kotlin类型字符串 (例如: "Int", "String", "Boolean", "Int?")
+     * @return 对应的 Java 类型字符串 (例如:  "java.lang.String", "boolean", "java.lang.Integer")
+     */
+    fun getJavaType(kotlinType: String): String {
+        val typeName = kotlinType.trim().removeSuffix("?")
+
+        return when (typeName) {
+            "String" -> "java.lang.String"
+
+            "Int" -> "java.lang.Integer"
+            "Long" -> "java.lang.Long"
+            "Short" -> "java.lang.Short"
+            "Byte" -> "java.lang.Byte"
+
+            "Double" -> "java.lang.Double"
+            "Float" -> "java.lang.Float"
+
+            "Boolean" -> "java.lang.Boolean"
+            "Char" -> "java.lang.Character"
+
+            else -> error("未识别的类型")
+        }
+    }
 }

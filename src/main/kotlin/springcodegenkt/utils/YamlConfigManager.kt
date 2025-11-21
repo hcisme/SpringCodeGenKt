@@ -48,6 +48,12 @@ data class AppConfig(
     val suffixBeanParamTimeStart: String,
     @SerialName("suffix-bean-param-time-end")
     val suffixBeanParamTimeEnd: String,
+    @SerialName("suffix-controller")
+    val suffixController: String,
+    @SerialName("suffix-service")
+    val suffixService: String,
+    @SerialName("suffix-service-impl")
+    val suffixServiceImpl: String,
     @SerialName("suffix-mapper")
     val suffixMapper: String,
     @SerialName("date-format")
@@ -89,6 +95,11 @@ data class PackageConfig(
     val pojo: String,
     val query: String,
     val enums: String,
+    val vo: String,
+    val controller: String,
+    val service: String,
+    @SerialName("service-impl")
+    val serviceImpl: String,
     val mappers: String,
     val utils: String
 )

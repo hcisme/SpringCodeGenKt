@@ -1,0 +1,33 @@
+open class ABaseController {
+    companion object {
+        const val STATUS_SUCCESS = "success"
+        const val STATUS_ERROR = "error"
+    }
+
+    protected fun <T> getSuccessResponseVO(t: T): ResponseVO<T> {
+        val responseVO = ResponseVO<T>()
+        responseVO.status = STATUS_SUCCESS
+        responseVO.code = ResponseCodeEnum.CODE_200.code
+        responseVO.info = ResponseCodeEnum.CODE_200.msg
+        responseVO.data = t
+        return responseVO
+    }
+
+    protected fun <T> getBusinessErrorResponseVO(e: BusinessException, t: T): ResponseVO<T> {
+        val vo = ResponseVO<T>()
+        vo.status = STATUS_ERROR
+        vo.code = e.code ?: ResponseCodeEnum.CODE_600.code
+        vo.info = e.message
+        vo.data = t
+        return vo
+    }
+
+    protected fun <T> getServerErrorResponseVO(t: T): ResponseVO<T> {
+        val vo = ResponseVO<T>()
+        vo.status = STATUS_ERROR
+        vo.code = ResponseCodeEnum.CODE_500.code
+        vo.info = ResponseCodeEnum.CODE_500.msg
+        vo.data = t
+        return vo
+    }
+}

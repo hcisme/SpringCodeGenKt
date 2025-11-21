@@ -19,6 +19,12 @@ suffix-bean-param-fuzzy: Fuzzy
 suffix-bean-param-time-start: Start
 # 模糊查询时间 结束 的后缀
 suffix-bean-param-time-end: End
+# controller 的后缀
+suffix-controller: Controller
+# service 的后缀
+suffix-service: Service
+# service impl 的后缀
+suffix-service-impl: ServiceImpl
 # mapper 的后缀
 suffix-mapper: Mapper
 # 日期相关
@@ -33,5 +39,9 @@ package-config:
   pojo: entity.pojo
   query: entity.query
   enums: entity.enums
+  vo: entity.vo
+  controller: controller
+  service: service
+  service-impl: impl
   mappers: mappers
   utils: utils

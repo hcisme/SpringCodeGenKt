@@ -39,7 +39,7 @@ object BuildQuery {
     }
 
     private fun BufferedWriter.writePackageAndImports(tableInfo: TableInfo) {
-        writeLine("package ${Constant.FULL_PARAM_PACKAGE}")
+        writeLine("package ${Constant.FULL_QUERY_PACKAGE}")
         newLine()
 
         val imports = mutableSetOf<String>().apply {
@@ -61,7 +61,7 @@ object BuildQuery {
             newLine()
         }
 
-        writeLine("class ${tableInfo.beanQueryName} {")
+        writeLine("class ${tableInfo.beanQueryName} : BaseQuery() {")
     }
 
     private fun BufferedWriter.writeFields(fieldList: List<FieldInfo>) {
