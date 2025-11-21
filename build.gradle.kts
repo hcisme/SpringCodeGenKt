@@ -1,10 +1,16 @@
 plugins {
     kotlin("jvm") version "2.2.20"
     kotlin("plugin.serialization") version "2.2.20"
+    application
+    id("com.gradleup.shadow") version "9.2.2"
 }
 
 group = "io.github.hcisme"
 version = "1.0-SNAPSHOT"
+
+application {
+    mainClass.set("$group.springcodegenkt.SpringCodeGenApplicationKt")
+}
 
 repositories {
     mavenCentral()
@@ -25,4 +31,15 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(17)
+}
+
+val copyConfigToLibs = tasks.register<Copy>("copyConfigToLibs") {
+    from("src/main/resources") {
+        include("application.yml")
+    }
+    into(tasks.shadowJar.get().destinationDirectory)
+}
+
+tasks.shadowJar {
+    finalizedBy(copyConfigToLibs)
 }

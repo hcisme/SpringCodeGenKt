@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.io.File
+import java.io.InputStream
 
 /**
  * 配置管理类
@@ -24,8 +26,18 @@ object YamlConfigManager {
      */
     private fun initializeFromResources(resourcePath: String = "application.yml") {
         try {
-            val inputStream = javaClass.classLoader.getResourceAsStream(resourcePath)
-                ?: throw IllegalArgumentException("资源文件不存在: $resourcePath")
+            val externalConfigFile = File(resourcePath)
+            val inputStream: InputStream
+            if (externalConfigFile.exists() && externalConfigFile.isFile) {
+                // --- 生产环境 --- 使用外部配置文件 (例如在 build/libs/application.yml)
+                logger.info("生产环境-外部配置文件路径: ${externalConfigFile.absolutePath}")
+                inputStream = externalConfigFile.inputStream()
+            } else {
+                // --- 开发环境 --- 未找到外部文件，回退到从 Classpath (JAR 内部) 加载
+                logger.info("开发环境配置文件: $resourcePath")
+                inputStream = javaClass.classLoader.getResourceAsStream(resourcePath)
+                    ?: error("在 JAR 内部也找不到默认资源文件: $resourcePath")
+            }
 
             val yamlContent = inputStream.bufferedReader().use { it.readText() }
             config = Yaml.default.decodeFromString<AppConfig>(yamlContent)
